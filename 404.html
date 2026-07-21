@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Vue Basics</title>
+</head>
+<body>
+    <div id="app">
+         <header>
+            <span>{{span}}</span>
+        </header>
+        <main>
+            <h1>{{h}}</h1>
+            <p>{{p}}</p>
+            <a :href="button" target="_blank"> Back to safety</a>
+        </main>
+        <footer>
+
+        </footer>
+    </div>
+       
+    <script>
+        const {createApp, ref} = Vue
+        createApp({
+            setup() {
+                const h = "404"
+                const p = "this page is not found"
+                const span = "😊"
+                const button = "https://scrimba.com/"
+                return {h, p, span, button}
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>
