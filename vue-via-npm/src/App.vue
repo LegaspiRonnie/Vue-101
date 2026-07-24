@@ -10,12 +10,8 @@ import Footer from './components/Footer.vue';
   <Header />
   <Main />
   <Footer />
-  
-  
 </template>
 
 <style scoped>
-  footer p {
-    color: blue;
-  }
+  
 </style>

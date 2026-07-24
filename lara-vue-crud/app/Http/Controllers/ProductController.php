@@ -15,8 +15,6 @@ class ProductController extends Controller
     {
         $products = Product::latest()->get();
         return Inertia::render('products/Index', compact('products'));
-        
-        
     }
 
     /**
@@ -68,24 +66,54 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Product $product)
     {
-        //
+        // return $product;
+        return Inertia::render('products/Edit', compact('product'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Product $product)
     {
-        //
+        $request->validate([
+            'name' => "required|string|max:255",
+            'price' => "required|numeric|min:0",
+            'description' => "nullable|string"
+        ]);
+
+
+        try {
+            // throw new \Exception('Test exception');
+
+            $product->update([
+                'name' => $request->input('name'),
+                'price' => $request->input('price'),
+                'description' => $request->input('description'),
+            ]);
+
+            return redirect()->route('products.index')
+                ->with('message', 'Product Updated Successfully!');
+        } catch (\Throwable $e) {
+            return redirect()->route('products.index')
+                ->with('error', 'Failed to update product.');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Product $product)
     {
-        //
+        try {
+            $product->delete();
+
+            return redirect()->route('products.index')
+                ->with('message', 'Product Deleted Successfully!');
+        } catch (\Throwable $e) {
+            return redirect()->route('products.index')
+                ->with('error', 'Failed to delete product.');
+        }
     }
 }
